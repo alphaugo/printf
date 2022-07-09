@@ -1,1 +1,7 @@
-this projec is basically to on writing a fuction the words the same way the printf fumction does, so we can say that its a clone of the printf function
+#ALX C printf function Group Project for printf function
+##Description
+This projec is to work on team of two people to create a printf function we the conditions give.
+
+###Authors 
+	OttoNyongole and
+	Benjamin Ugochukwu
