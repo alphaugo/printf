@@ -1,52 +1,47 @@
 #include <stdarg.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include "main.h"
-#include <stddef.h>
 /**
- * _printf - create the printf function
- * @format: string with format specifier
- * Return: number of characters printed
+ * _printf - prints according to format
+ * @format: The given format
+ *
+ * Return: On success 1.
+ * On error, -1 is returned.
  */
 int _printf(const char *format, ...)
 {
-	if (format != NULL)
-	{
-		int count = 0, i;
-		int (*m)(va_list);
-		va_list args;
+	va_list params;
+	printer_t current_printer;
+	int i = 0, putchar_flag = 1, length = 0;
 
-		va_start(args, format);
-		i = 0;
-		if (format[0] == '%' && format[1] == '\0')
-			return (-1);
-		while (format != NULL && format[i] != '\0')
-		{
-			if (format[i] == '%')
-			{
-				if (format[i + 1] == '%')
-				{
-					count += _putchar(format[i]);
-					i += 2;
-				}
-				else
-				{
-					m = get_func(format[i + 1]);
-					if (m)
-						count += m(args);
-					else
-						count = _putchar(format[i]) + _putchar(format[i + 1]);
-					i += 2;
-				}
-			}
+	if ((format == NULL) || (format[0] == '%' && !format[1]))
+		return (-1);
+	va_start(params, format);
+	while (format[i] != '\0')
+	{
+		if (format[i] != '%')
+			if (putchar_flag)
+				length += _putchar(format[i]);
 			else
 			{
-				count += _putchar(format[i]);
-				i++;
+				current_printer = select_printer(format[i]);
+				if (current_printer.format != '*')
+					length += current_printer.func(&params);
+				else
+					length += _putchar('%') + _putchar(format[i]);
+				putchar_flag = 1;
 			}
-		}
-		va_end(args);
-		return (count);
+		else
+			if (putchar_flag)
+				putchar_flag = 0;
+			else
+			{
+				/* ToDO: Add condition for blanks */
+				length += _putchar(format[i]);
+				putchar_flag = 1;
+			}
+		i++;
 	}
-	return (-1);
+	va_end(params);
+	return (length);
 }
