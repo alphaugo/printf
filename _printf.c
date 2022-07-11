@@ -1,4 +1,6 @@
 #include "main.h"
+#include <stdarg.h>
+#include <stdlib.h>
 
 /**
  * _printf - Receives the main string and all the necessary parameters to

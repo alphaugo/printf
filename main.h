@@ -2,6 +2,8 @@
 #define MAIN_H
 
 #include <stdarg.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /**
  * struct printer - An structure for each format
