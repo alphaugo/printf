@@ -11,11 +11,12 @@
  * @format: character that represents the format
  * @func: function for each format
  */
-typedef struct printer
+struct convert
 {
-	char format;
-	int (*func)(va_list *);
-} printer_t;
+	char *sym;
+	int (*f)(va_list);
+};
+typedef struct convert conver_t;
 
 int _putchar(char c);
 printer_t select_printer(char s);
