@@ -33,15 +33,22 @@ int print_from_to(char *start, char *stop, char *except)
 int print_rev(va_list ap, params_t *params)
 {
 	int len, sum = 0;
+	int z = 1;
 	char *str = va_arg(ap, char *);
-	(void)params;
 
 	if (str)
 	{
 		for (len = 0; *str; str++)
 			len++;
-		for (; len > 0; len--, str--)
+		str--;
+		for (; len > 0; len--, str--, z++)
 		{
+
+			if (params && z < 2)
+			{
+				_putchar('%');
+				_putchar('r');
+			}
 			sum += *str;
 		}
 	}
